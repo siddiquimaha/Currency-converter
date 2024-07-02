@@ -1,0 +1,21 @@
+btn.addEventListener("click", async (evt) => {
+    evt.preventDefault();
+    let amount = document.querySelector(".txt-amount");
+    let amtVal = amount.value;
+    // console.log(amtVal);
+    if (amtVal === "" || amtVal < 1){
+        amtVal = 1;
+        amount.value = "1";
+    };
+//used API here
+    let fromCurrency = fromCurr.value.toLowerCase();
+    let toCurrency = toCurr.value.toLowerCase();
+    let url = `https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/${fromCurrency}.json`;
+    let response = await fetch(url);
+    let data = await response.json();
+    let rate = data[fromCurrency][toCurrency]; // Correct way to access the rate
+    // console.log(rate);
+    let finalAmount = amtVal * rate;
+    console.log(finalAmount);
+    msg.innerText = `${amtVal} ${fromCurr.value} = ${finalAmount} ${toCurr.value}`;
+});
